@@ -232,7 +232,17 @@
                     <li class="header">MAIN</li>
                     
                     <li class="active open"><a href="{% url 'index' %}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>            
-                    <li class=""><a href="..\appointment\book-appointment.html"><i class="zmdi zmdi-calendar-check"></i><span>Appointment</span></a></li>
+                    
+
+                    <li class="">
+                        <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-add"></i><span>Appointment</span></a>
+                        <ul class="ml-menu">
+                            <li class=""><a href="..\doctor\doctors.html">Availability</a></li>
+                            <li class=""><a href="..\doctor\add-doctor.html">Book Appointments</a></li>                       
+                        </ul>
+                    </li>
+
+
                     <li class="">
                         <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account-add"></i><span>Doctors</span></a>
                         <ul class="ml-menu">

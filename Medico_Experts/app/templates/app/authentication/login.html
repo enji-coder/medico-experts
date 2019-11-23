@@ -88,6 +88,12 @@
                             </div>
                             <h5>Log in</h5>
                         </div>
+                         {% if e_msg %}
+                            <div class="alert alert-success form-control" role="alert">
+                                {{e_msg}} 
+                            </div>
+                        {% endif %}
+                 
                         <div class="content">
                                 <div>
                                     <select class="form-control" name="role">
@@ -114,7 +120,7 @@
                         </div>
                         <div class="footer text-center">
                             <input type="submit" class="btn btn-primary btn-round btn-lg btn-block waves-effect waves-light" value="SIGN IN">
-                            <h5><a href="forgot-password.html" class="link">Forgot Password?</a></h5>
+                            <h5><a href="{% url 'forgot-password-page' %}" class="link">Forgot Password?</a></h5>
                         </div>
                     </form>
         </div>

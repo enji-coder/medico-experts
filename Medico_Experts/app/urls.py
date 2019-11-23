@@ -28,6 +28,11 @@ urlpatterns = [
    # path('patient-dashboard/',views.doctor_dashboard,name="doctor-dashboard"),
     
     path('logout/',views.logout,name="logout"),
+    path('forgot-password-page/',views.forgot_password_page,name="forgot-password-page"),
+
+    path('forgot-password/',views.forgot_password,name="forgot-password"),
+
+    path('reset-password/',views.reset_password,name="reset-password"),
 
 ]
 

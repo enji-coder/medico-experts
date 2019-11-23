@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import *
+from random import *
 import time
+from django.core.mail import send_mail
+import sys
 
 # Create your views here.
 def index(request):
@@ -102,7 +105,7 @@ def login_evalute(request):
             e_msg="Error : Invalid email and password"
             return render(request,"app/authentication/login.html",{'e_msg':e_msg})
 
-def Doctor_Dashboard(request):
+def Doctor_Dashboard(request):  
     return render(request,"app/dashboard/Base_Doctor.html")
     
 
@@ -114,6 +117,51 @@ def logout(request):
     else:
         return render(request,"app/authentication/login.html")
         
-    
-    
-    
+def forgot_password_page(request):
+    return render(request,"app/authentication/forgot-password.html")
+
+def forgot_password(request):
+    try:
+        email=request.POST['email']
+        uid=User.objects.get(email=email)
+        if uid:
+            otp=randint(1111,9999)
+            uid.otp=otp
+            uid.save()
+            subject="OTP - forgot password"
+            message="your otp is : "+str(otp)
+            send_mail(subject,message,"anjali.20.learn@gmail.com",[email])
+            s_msg="Check your gmail account for otp"
+            print("----------> s_msg",s_msg)
+            return render(request,"app/authentication/reset_password.html",{'email':email,'s_msg':s_msg})
+        else:
+            e_msg="Invalid email address"
+            print("--------->",e_msg)
+            return render(request,"app/authentication/forgot-password.html",{'e_msg':e_msg})
+    except:
+        print("--------->outside the if..else",sys.exc_info())
+        return render(request,"app/authentication/login.html")
+
+def reset_password(request):
+    try:
+        email=request.POST['email']
+        otp=request.POST['OTP']
+        newpassword=request.POST['newpassword']
+        repassword=request.POST['repassword']
+        uid=User.objects.get(email=email)
+        if uid:
+            print("--------->",uid)
+            if str(uid.otp)==otp and newpassword==repassword:
+                uid.password=newpassword
+                uid.save()
+                s_msg="password change successfully "
+                return render(request,"app/authentication/login.html",{'s_msg':s_msg})
+            else:
+                e_msg="otp or password is wrong"
+                return render(request,"app/authentication/reset_password.html")
+        else:
+            return render(request,"app/authentication/forgot-password.html")
+    except:
+        return render(request,"app/authentication/forgot-password.html")
+
+
